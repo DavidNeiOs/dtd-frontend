@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
-import logo from "./logo.svg";
-import "./App.scss";
+import { BrowserRouter, Switch, Route } from "react-router-dom";
+import { Layout } from "./components/layout";
+import { Home } from "./pages/home";
+import "./sass/style.scss";
 
 const App: React.FC = () => {
   const [info, setInfo] = useState("");
@@ -16,20 +18,13 @@ const App: React.FC = () => {
 
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React {Boolean(info) ? info : "Loading..."}
-        </a>
-      </header>
+      <BrowserRouter>
+        <Layout>
+          <Switch>
+            <Route exact={true} path="/" component={Home} />
+          </Switch>
+        </Layout>
+      </BrowserRouter>
     </div>
   );
 };
