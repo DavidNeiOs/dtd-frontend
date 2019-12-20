@@ -1,8 +1,19 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useEffect, useState } from "react";
+import logo from "./logo.svg";
+import "./App.scss";
 
 const App: React.FC = () => {
+  const [info, setInfo] = useState("");
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const response = await fetch("https://localhost:4000");
+      const text = await response.text();
+      setInfo(text);
+    };
+    fetchData();
+  }, []);
+
   return (
     <div className="App">
       <header className="App-header">
@@ -16,11 +27,11 @@ const App: React.FC = () => {
           target="_blank"
           rel="noopener noreferrer"
         >
-          Learn React
+          Learn React {Boolean(info) ? info : "Loading..."}
         </a>
       </header>
     </div>
   );
-}
+};
 
 export default App;
