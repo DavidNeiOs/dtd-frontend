@@ -60,7 +60,7 @@ export const Layout = ({ children, user = false }: Props) => {
           </div>
         </nav>
       </header>
-      {children}
+      <div className="content">{children}</div>
     </>
   );
 };
