@@ -1,8 +1,10 @@
 import React, { FunctionComponent } from "react";
-import { Formik, Field, Form, ErrorMessage, FieldProps } from "formik";
+import { Formik, Field, Form, ErrorMessage } from "formik";
 import * as Yup from "yup";
 
-import { tags } from "./utils";
+import { Checkbox } from "../checkbox";
+import { MediaUpload } from "../media-upload";
+import { tags } from "../../constants/stores";
 
 interface Props {
   store?: object;
@@ -19,7 +21,8 @@ export const StoreForm: FunctionComponent<Props> = (store = {}) => {
           FAMILY_FRIENDLY: false,
           VEGETARIAN: false,
           LICENSED: false
-        }
+        },
+        url: ""
       }}
       validationSchema={Yup.object({
         name: Yup.string()
@@ -35,7 +38,8 @@ export const StoreForm: FunctionComponent<Props> = (store = {}) => {
           FAMILY_FRIENDLY: Yup.boolean(),
           VEGETARIAN: Yup.boolean(),
           LICENSED: Yup.boolean()
-        })
+        }),
+        url: Yup.string()
       })}
       onSubmit={values => {
         alert(JSON.stringify(values, null, 2));
@@ -51,48 +55,13 @@ export const StoreForm: FunctionComponent<Props> = (store = {}) => {
         <ul className="tags">
           {Object.keys(tags).map((tag: string) => {
             return (
-              <Checkbox name={`tags.${tag}`} key={tag}>
-                {tags[tag]}
-              </Checkbox>
+              <Field name={`tags.${tag}`} component={Checkbox} key={tag} />
             );
           })}
         </ul>
+        <Field name="url" component={MediaUpload} />
         <input type="submit" value="Save →" className="button" />
       </Form>
     </Formik>
   );
 };
-
-interface CheckboxProps {
-  children: React.ReactNode;
-  name: string;
-}
-const Checkbox = ({ children, ...props }: CheckboxProps) => {
-  return (
-    <Field name={props.name}>
-      {({ field, form }: FieldProps) => {
-        return (
-          <div
-            className="tag tag__choice"
-            onClick={() => form.setFieldValue(props.name, !field.value)}
-          >
-            <input type="checkbox" checked={field.value} readOnly />
-            <label htmlFor={props.name}>{children}</label>
-          </div>
-        );
-      }}
-    </Field>
-  );
-};
-
-/**
- * checkbox component replaces this code
- * <input
-      type="checkbox"
-      name={`tags.${tag}`}
-      id={tag}
-      onChange={handleChange}
-      value={getIn(values.tags, tag)}
-    />
-    <label htmlFor={tag}>{tags[tag]}</label>
- */

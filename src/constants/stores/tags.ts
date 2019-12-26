@@ -5,12 +5,3 @@ export const tags: { [key: string]: string } = {
   VEGETARIAN: "Vegetarian", 
   LICENSED: "Licensed"
 }
-
-export const getBooleanObject = (object: object) => {
-  return Object.keys(object).reduce((acc, current) => {
-    return {
-      ...acc,
-      [current]: false
-    }
-  }, {})
-}
