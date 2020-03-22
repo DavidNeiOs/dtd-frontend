@@ -1,5 +1,16 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { apiClient } from "../../services/apiClient";
 
 export const Home = () => {
-  return <p>Home page</p>;
+  const [homeData, setHomeData] = useState("");
+  useEffect(() => {
+    async function getData() {
+      const response = await apiClient.get("/");
+      console.log(response);
+      setHomeData(response.data.data);
+    }
+    getData();
+  }, []);
+
+  return <p>{homeData}</p>;
 };

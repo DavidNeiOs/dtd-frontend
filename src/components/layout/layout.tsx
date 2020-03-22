@@ -1,5 +1,5 @@
 import React, { ReactNode } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { UserLoggedIn } from "./user-logged-in";
 import { UserLoggedOut } from "./user-logged-out";
 
@@ -24,6 +24,9 @@ interface Props {
 }
 
 export const Layout = ({ children, user = false }: Props) => {
+  const location = useLocation();
+  const currentPage = location.pathname;
+
   return (
     <>
       <header className="top">
@@ -38,7 +41,12 @@ export const Layout = ({ children, user = false }: Props) => {
               const { icon: Icon } = option;
               return (
                 <li className="nav__item" key={index}>
-                  <Link to={option.slug} className="nav__link">
+                  <Link
+                    to={option.slug}
+                    className={`nav__link ${
+                      currentPage === option.slug ? "nav__link--active" : ""
+                    }`}
+                  >
                     <Icon></Icon>
                     <span>{option.title}</span>
                   </Link>

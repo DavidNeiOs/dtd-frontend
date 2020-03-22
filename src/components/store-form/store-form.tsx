@@ -4,30 +4,33 @@ import * as Yup from "yup";
 
 import { Checkbox } from "../checkbox";
 import { MediaUpload } from "../media-upload";
+import { Store } from "../../types/store";
 import { tags } from "../../constants/stores";
 
 interface Props {
-  store?: object;
+  store?: Store;
 }
-export const StoreForm: FunctionComponent<Props> = (store = {}) => {
+export const StoreForm: FunctionComponent<Props> = ({
+  store = {
+    name: "",
+    description: "",
+    tags: {
+      WIFI: false,
+      OPEN_LATE: false,
+      FAMILY_FRIENDLY: false,
+      VEGETARIAN: false,
+      LICENSED: false
+    },
+    url: ""
+  }
+}) => {
   return (
     <Formik
-      initialValues={{
-        name: "",
-        description: "",
-        tags: {
-          WIFI: false,
-          OPEN_LATE: false,
-          FAMILY_FRIENDLY: false,
-          VEGETARIAN: false,
-          LICENSED: false
-        },
-        url: ""
-      }}
+      initialValues={store}
       validationSchema={Yup.object({
         name: Yup.string()
           .max(20, "Must 20 characters long or less")
-          .required("required"),
+          .required("Required"),
         description: Yup.string().max(
           240,
           "Must be 240 characters long or less"
