@@ -6,7 +6,6 @@ export const Home = () => {
   useEffect(() => {
     async function getData() {
       const response = await apiClient.get("/");
-      console.log(response);
       setHomeData(response.data.data);
     }
     getData();

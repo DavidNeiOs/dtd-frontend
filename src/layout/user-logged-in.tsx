@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { Heart } from "../icons/heart";
-import Logout from "../icons/logout.png";
+import { Heart } from "../components/icons/heart";
+import Logout from "../components/icons/logout.png";
 
 export const UserLoggedIn = () => {
   return (

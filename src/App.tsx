@@ -1,20 +1,26 @@
-import React from "react";
+import React, { useState } from "react";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
-import { Layout } from "./components/layout";
+
+import { FlashContextProvider } from "./context/flash";
+import { Layout } from "./layout";
 import { Home } from "./pages/home";
 import { Add } from "./pages/add";
 import "./sass/style.scss";
 
 const App: React.FC = () => {
+  const flashes = useState([] as any[]);
+
   return (
     <div className="App">
       <BrowserRouter>
-        <Layout>
-          <Switch>
-            <Route exact={true} path="/" component={Home} />
-            <Route exact={true} path="/add" component={Add} />
-          </Switch>
-        </Layout>
+        <FlashContextProvider value={flashes}>
+          <Layout>
+            <Switch>
+              <Route exact={true} path="/" component={Home} />
+              <Route exact={true} path="/add" component={Add} />
+            </Switch>
+          </Layout>
+        </FlashContextProvider>
       </BrowserRouter>
     </div>
   );

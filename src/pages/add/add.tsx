@@ -6,7 +6,7 @@ export const Add = () => {
   return (
     <div className="inner">
       <h2>Add store</h2>
-      <StoreForm />
+      <StoreForm endpoint="/add" />
     </div>
   );
 };

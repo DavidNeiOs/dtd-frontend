@@ -6,9 +6,12 @@ import { Checkbox } from "../checkbox";
 import { MediaUpload } from "../media-upload";
 import { Store } from "../../types/store";
 import { tags } from "../../constants/stores";
+import { apiClient } from "../../services/apiClient";
+import { useFlashes } from "../../context/flash";
 
 interface Props {
   store?: Store;
+  endpoint: string;
 }
 export const StoreForm: FunctionComponent<Props> = ({
   store = {
@@ -19,11 +22,13 @@ export const StoreForm: FunctionComponent<Props> = ({
       OPEN_LATE: false,
       FAMILY_FRIENDLY: false,
       VEGETARIAN: false,
-      LICENSED: false
+      LICENSED: false,
     },
-    url: ""
-  }
+    url: "",
+  },
+  endpoint,
 }) => {
+  const [flashes, setFlashes] = useFlashes();
   return (
     <Formik
       initialValues={store}
@@ -40,12 +45,13 @@ export const StoreForm: FunctionComponent<Props> = ({
           OPEN_LATE: Yup.boolean(),
           FAMILY_FRIENDLY: Yup.boolean(),
           VEGETARIAN: Yup.boolean(),
-          LICENSED: Yup.boolean()
+          LICENSED: Yup.boolean(),
         }),
-        url: Yup.string()
+        url: Yup.string(),
       })}
-      onSubmit={values => {
-        alert(JSON.stringify(values, null, 2));
+      onSubmit={async (values, actions) => {
+        const response = await apiClient.post(endpoint, values);
+        setFlashes([...flashes, response.data]);
       }}
     >
       <Form className="card">
@@ -63,7 +69,9 @@ export const StoreForm: FunctionComponent<Props> = ({
           })}
         </ul>
         <Field name="url" component={MediaUpload} />
-        <input type="submit" value="Save →" className="button" />
+        <button type="submit" className="button">
+          Save →
+        </button>
       </Form>
     </Formik>
   );
