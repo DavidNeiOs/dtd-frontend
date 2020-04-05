@@ -30,7 +30,6 @@ export const Layout = ({ children, user = false }: Props) => {
   const location = useLocation();
   const currentPage = location.pathname;
   const [flashes] = useFlashes();
-  console.log(flashes);
 
   return (
     <>
@@ -77,7 +76,7 @@ export const Layout = ({ children, user = false }: Props) => {
         <div className="inner">
           <div className="flash-messages">
             {flashes.map((flash, index) => (
-              <Flash flash={flash} key={index} />
+              <Flash flash={flash} key={index} index={index} />
             ))}
           </div>
         </div>

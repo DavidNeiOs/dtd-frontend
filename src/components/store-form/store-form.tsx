@@ -1,17 +1,15 @@
 import React, { FunctionComponent } from "react";
-import { Formik, Field, Form, ErrorMessage } from "formik";
+import { Formik, Field, Form, ErrorMessage, FormikHelpers } from "formik";
 import * as Yup from "yup";
 
 import { Checkbox } from "../checkbox";
 import { MediaUpload } from "../media-upload";
 import { Store } from "../../types/store";
 import { tags } from "../../constants/stores";
-import { apiClient } from "../../services/apiClient";
-import { useFlashes } from "../../context/flash";
 
 interface Props {
   store?: Store;
-  endpoint: string;
+  onSubmit: (values: Store, actions: FormikHelpers<Store>) => Promise<any>;
 }
 export const StoreForm: FunctionComponent<Props> = ({
   store = {
@@ -26,9 +24,8 @@ export const StoreForm: FunctionComponent<Props> = ({
     },
     url: "",
   },
-  endpoint,
+  onSubmit,
 }) => {
-  const [flashes, setFlashes] = useFlashes();
   return (
     <Formik
       initialValues={store}
@@ -49,10 +46,7 @@ export const StoreForm: FunctionComponent<Props> = ({
         }),
         url: Yup.string(),
       })}
-      onSubmit={async (values, actions) => {
-        const response = await apiClient.post(endpoint, values);
-        setFlashes([...flashes, response.data]);
-      }}
+      onSubmit={onSubmit}
     >
       <Form className="card">
         <label htmlFor="name">Your store name:</label>
