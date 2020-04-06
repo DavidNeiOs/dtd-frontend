@@ -13,9 +13,13 @@ export const StoreCard = ({ store }: Props) => {
       <div className="store__hero">
         <div className="store__actions">
           <div className="store__action store__action--edit">
-            <a href={`/stores/${store._id}/edit`}>
+            <Link
+              to={{
+                pathname: `/stores/${store._id}/edit`,
+              }}
+            >
               <Pencil />
-            </a>
+            </Link>
           </div>
         </div>
         <img

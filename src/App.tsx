@@ -5,6 +5,7 @@ import { FlashContextProvider } from "./context/flash";
 import { Layout } from "./layout";
 import { Home } from "./pages/home";
 import { Add } from "./pages/add";
+import { EditStore } from "./pages/edit-store";
 import "./sass/style.scss";
 
 const App: React.FC = () => {
@@ -19,6 +20,11 @@ const App: React.FC = () => {
               <Route exact={true} path="/" component={Home} />
               <Route exact={true} path="/stores" component={Home} />
               <Route exact={true} path="/add" component={Add} />
+              <Route
+                exact={true}
+                path="/stores/:id/edit"
+                component={EditStore}
+              />
             </Switch>
           </Layout>
         </FlashContextProvider>

@@ -26,6 +26,7 @@ export const StoreForm: FunctionComponent<Props> = ({
   },
   onSubmit,
 }) => {
+  console.log(store);
   return (
     <Formik
       initialValues={store}
