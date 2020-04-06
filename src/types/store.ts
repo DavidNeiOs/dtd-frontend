@@ -1,3 +1,8 @@
+interface DataFromBackEnd {
+  slug: string
+  _id: string
+}
+
 export interface tags {
   WIFI: Boolean
   OPEN_LATE: Boolean
@@ -12,3 +17,5 @@ export interface Store {
   tags: tags
   url: String
 }
+
+export type StoreComplete = Store & DataFromBackEnd

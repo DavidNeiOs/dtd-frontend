@@ -1,15 +1,39 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
+
+import { StoreComplete } from "../../types/store";
 import { apiClient } from "../../services/apiClient";
+import { StoreCard } from "../../components/store-card";
+import { useFlashes } from "../../context/flash";
 
 export const Home = () => {
-  const [homeData, setHomeData] = useState("");
-  useEffect(() => {
-    async function getData() {
+  const [stores, setStores] = useState<StoreComplete[]>([]);
+  const [flashes, setFlashes] = useFlashes();
+
+  const memoizedGetData = useCallback(async () => {
+    try {
       const response = await apiClient.get("/");
-      setHomeData(response.data.data);
+      setStores(response.data.stores);
+    } catch (e) {
+      setFlashes([
+        ...flashes,
+        { success: false, message: "There was an error fetching the data" },
+      ]);
     }
-    getData();
   }, []);
 
-  return <p>{homeData}</p>;
+  useEffect(() => {
+    memoizedGetData();
+  }, [memoizedGetData]);
+
+  console.log(stores);
+  return (
+    <div className="inner">
+      <h2>Stores</h2>
+      <div className="stores">
+        {stores.map((store) => (
+          <StoreCard store={store} key={store.slug} />
+        ))}
+      </div>
+    </div>
+  );
 };
