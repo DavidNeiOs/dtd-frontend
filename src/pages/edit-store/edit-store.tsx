@@ -26,8 +26,8 @@ export const EditStore = ({ history }: Props) => {
 
   const onSubmitForm = async (values: Store, actions: FormikHelpers<Store>) => {
     const { data } = await apiClient.post(`/stores/${id}/edit`, values);
+    setFlashes([...flashes, data]);
     if (data.success) {
-      setFlashes([...flashes, data]);
       history.push(`/stores/${id}/edit`);
     }
   };

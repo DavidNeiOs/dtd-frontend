@@ -6,6 +6,7 @@ import { Checkbox } from "../checkbox";
 import { MediaUpload } from "../media-upload";
 import { Store } from "../../types/store";
 import { tags } from "../../constants/stores";
+import { LocationInput } from "../location-input";
 
 interface Props {
   store?: Store;
@@ -23,10 +24,13 @@ export const StoreForm: FunctionComponent<Props> = ({
       LICENSED: false,
     },
     url: "",
+    location: {
+      address: "",
+      coordinates: [],
+    },
   },
   onSubmit,
 }) => {
-  console.log(store);
   return (
     <Formik
       initialValues={store}
@@ -46,6 +50,12 @@ export const StoreForm: FunctionComponent<Props> = ({
           LICENSED: Yup.boolean(),
         }),
         url: Yup.string(),
+        location: Yup.object({
+          address: Yup.string().required("You must provide an address"),
+          coordinates: Yup.array()
+            .of(Yup.number())
+            .required("Make sure you have selected an option"),
+        }),
       })}
       onSubmit={onSubmit}
     >
@@ -62,8 +72,14 @@ export const StoreForm: FunctionComponent<Props> = ({
               <Field name={`tags.${tag}`} component={Checkbox} key={tag} />
             );
           })}
+          {/* Adress, lng and lat */}
         </ul>
         <Field name="url" component={MediaUpload} />
+        <label htmlFor="location.address">Address</label>
+        <Field name="location.address" component={LocationInput} />
+        <ErrorMessage name="location.address" />
+        <br />
+        <ErrorMessage name="location.coordinates" />
         <button type="submit" className="button">
           Save →
         </button>

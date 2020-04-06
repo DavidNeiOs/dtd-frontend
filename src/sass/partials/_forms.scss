@@ -30,3 +30,25 @@ label {
     border-bottom: 1px solid $grey;
   }
 }
+
+.location-option {
+  display: block;
+  width: 100%;
+  text-align: start;
+  border: 1px solid #bbbbbb;
+  background-color: transparent;
+  padding: 6px 12px;
+  color: #000;
+  cursor: pointer;
+}
+
+[type="submit"] {
+  width: 100%;
+  padding: 6px 12px;
+  margin-top: 1.5rem;
+
+  &:hover {
+    cursor: pointer;
+    background: #f5c432;
+  }
+}

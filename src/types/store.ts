@@ -4,18 +4,24 @@ interface DataFromBackEnd {
 }
 
 export interface tags {
-  WIFI: Boolean
-  OPEN_LATE: Boolean
-  FAMILY_FRIENDLY: Boolean
-  VEGETARIAN: Boolean
-  LICENSED: Boolean
+  WIFI: boolean
+  OPEN_LATE: boolean
+  FAMILY_FRIENDLY: boolean
+  VEGETARIAN: boolean
+  LICENSED: boolean
+}
+
+export interface location {
+  address: string
+  coordinates: number[]
 }
 
 export interface Store {
-  name: String
-  description: String
+  name: string
+  description: string
+  location: location
   tags: tags
-  url: String
+  url: string
 }
 
 export type StoreComplete = Store & DataFromBackEnd

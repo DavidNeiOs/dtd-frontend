@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useCallback } from "react";
+import { isEmpty } from "lodash";
 
 import { StoreComplete } from "../../types/store";
 import { apiClient } from "../../services/apiClient";
@@ -25,14 +26,12 @@ export const Home = () => {
     memoizedGetData();
   }, [memoizedGetData]);
 
-  console.log(stores);
   return (
     <div className="inner">
       <h2>Stores</h2>
       <div className="stores">
-        {stores.map((store) => (
-          <StoreCard store={store} key={store.slug} />
-        ))}
+        {!isEmpty(stores) &&
+          stores.map((store) => <StoreCard store={store} key={store.slug} />)}
       </div>
     </div>
   );
