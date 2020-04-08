@@ -72,7 +72,6 @@ export const StoreForm: FunctionComponent<Props> = ({
               <Field name={`tags.${tag}`} component={Checkbox} key={tag} />
             );
           })}
-          {/* Adress, lng and lat */}
         </ul>
         <Field name="url" component={MediaUpload} />
         <label htmlFor="location.address">Address</label>
