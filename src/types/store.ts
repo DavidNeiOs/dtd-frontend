@@ -20,7 +20,7 @@ export interface Store {
   name: string
   description: string
   location: location
-  tags: tags
+  tags: string[]
   url: string
 }
 

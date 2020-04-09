@@ -16,13 +16,7 @@ export const StoreForm: FunctionComponent<Props> = ({
   store = {
     name: "",
     description: "",
-    tags: {
-      WIFI: false,
-      OPEN_LATE: false,
-      FAMILY_FRIENDLY: false,
-      VEGETARIAN: false,
-      LICENSED: false,
-    },
+    tags: [],
     url: "",
     location: {
       address: "",
@@ -42,13 +36,7 @@ export const StoreForm: FunctionComponent<Props> = ({
           240,
           "Must be 240 characters long or less"
         ),
-        tags: Yup.object({
-          WIFI: Yup.boolean(),
-          OPEN_LATE: Yup.boolean(),
-          FAMILY_FRIENDLY: Yup.boolean(),
-          VEGETARIAN: Yup.boolean(),
-          LICENSED: Yup.boolean(),
-        }),
+        tags: Yup.array().of(Yup.string()),
         url: Yup.string().required("Add a photo of your place"),
         location: Yup.object({
           address: Yup.string().required("You must provide an address"),
@@ -69,7 +57,7 @@ export const StoreForm: FunctionComponent<Props> = ({
         <ul className="tags">
           {Object.keys(tags).map((tag: string) => {
             return (
-              <Field name={`tags.${tag}`} component={Checkbox} key={tag} />
+              <Field name="tags" component={Checkbox} key={tag} label={tag} />
             );
           })}
         </ul>

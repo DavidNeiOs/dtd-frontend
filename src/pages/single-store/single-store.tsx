@@ -62,15 +62,13 @@ export const SingleStore = ({ history }: Props) => {
             <p className="single__location">{store.location.address}</p>
             {store.description && <p>{store.description}</p>}
             <ul className="tags">
-              {Object.keys(store.tags).map((tag, index) =>
-                store.tags[tag as keyof Tags] ? (
-                  <li className="tag" key={index}>
-                    <Link to={`/tags/${tag}`} className="tag__link">
-                      <span className="tag__text">{tags[tag]}</span>
-                    </Link>
-                  </li>
-                ) : null
-              )}
+              {store.tags.map((tag, index: number) => (
+                <li className="tag" key={index}>
+                  <Link to={`/tags/${tag}`} className="tag__link">
+                    <span className="tag__text">{tags[tag]}</span>
+                  </Link>
+                </li>
+              ))}
             </ul>
           </div>
         </>

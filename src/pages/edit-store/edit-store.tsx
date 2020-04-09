@@ -32,7 +32,7 @@ export const EditStore = ({ history }: Props) => {
   };
 
   return (
-    <div>
+    <div className="inner">
       <h1>Store</h1>
       {!isEmpty(storeData) && (
         <StoreForm store={storeData} onSubmit={onSubmitForm} />

@@ -7,6 +7,8 @@ import { Home } from "./pages/home";
 import { Add } from "./pages/add";
 import { EditStore } from "./pages/edit-store";
 import { SingleStore } from "./pages/single-store";
+import { Tags } from "./pages/tags";
+import { Tag } from "./pages/tag";
 import "./sass/style.scss";
 
 const App: React.FC = () => {
@@ -27,6 +29,8 @@ const App: React.FC = () => {
                 component={EditStore}
               />
               <Route exact={true} path="/store/:slug" component={SingleStore} />
+              <Route exact={true} path="/tags" component={Tags}></Route>
+              <Route exact={true} path="/tag/:tag" component={Tag}></Route>
             </Switch>
           </Layout>
         </FlashContextProvider>

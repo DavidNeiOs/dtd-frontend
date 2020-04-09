@@ -18,3 +18,5 @@ export const getStaticMap = ([lng, lat]: number[]) => {
 
   return `https://maps.googleapis.com/maps/api/staticmap?center=${lat},${lng}&zoom=${zoom}&size=${size}&key=${process.env.REACT_APP_GOOGLE_MAPS_KEY}&markers=${lat},${lng}&scale=${scale}`
 }
+
+// TODO: Use the places lib instead of querying the data https://medium.com/@hamzaqaisrani/using-the-google-maps-places-autocomplete-javascript-api-in-a-react-project-5742bab4abc9
