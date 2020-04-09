@@ -30,7 +30,7 @@ const App: React.FC = () => {
               />
               <Route exact={true} path="/store/:slug" component={SingleStore} />
               <Route exact={true} path="/tags" component={Tags}></Route>
-              <Route exact={true} path="/tag/:tag" component={Tag}></Route>
+              <Route exact={true} path="/tags/:tag" component={Tag}></Route>
             </Switch>
           </Layout>
         </FlashContextProvider>

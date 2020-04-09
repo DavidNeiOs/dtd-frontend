@@ -5,7 +5,7 @@ import { isEmpty } from "lodash";
 import { apiClient } from "../../services/apiClient";
 import { getStaticMap } from "../../services/google-maps";
 import { useFlashes } from "../../context/flash";
-import { StoreComplete, tags as Tags } from "../../types/store";
+import { StoreComplete } from "../../types/store";
 import { tags } from "../../constants/stores";
 
 interface Props extends RouteComponentProps {}
@@ -34,8 +34,6 @@ export const SingleStore = ({ history }: Props) => {
   useEffect(() => {
     memoizedGetData();
   }, [memoizedGetData]);
-
-  console.log(store);
 
   return (
     <>
