@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { RouteComponentProps } from "react-router-dom";
+import { RouteComponentProps, useParams } from "react-router-dom";
 import { FormikHelpers } from "formik";
 import { isEmpty } from "lodash";
 
 import { apiClient } from "../../services/apiClient";
 import { useFlashes } from "../../context/flash";
-import { useParams } from "react-router-dom";
 import { StoreComplete, Store } from "../../types/store";
 import { StoreForm } from "../../components/store-form";
 

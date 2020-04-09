@@ -49,7 +49,7 @@ export const StoreForm: FunctionComponent<Props> = ({
           VEGETARIAN: Yup.boolean(),
           LICENSED: Yup.boolean(),
         }),
-        url: Yup.string(),
+        url: Yup.string().required("Add a photo of your place"),
         location: Yup.object({
           address: Yup.string().required("You must provide an address"),
           coordinates: Yup.array()

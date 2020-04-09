@@ -10,3 +10,11 @@ export const getGeocodeUrl = (address: string) => {
   const baseUrl = `https://maps.googleapis.com/maps/api/geocode/json?address=${address}&key=${process.env.REACT_APP_GOOGLE_MAPS_KEY}`
   return proxy + baseUrl
 }
+
+export const getStaticMap = ([lng, lat]: number[]) => {
+  const zoom = 14
+  const size = '800x150'
+  const scale = 2
+
+  return `https://maps.googleapis.com/maps/api/staticmap?center=${lat},${lng}&zoom=${zoom}&size=${size}&key=${process.env.REACT_APP_GOOGLE_MAPS_KEY}&markers=${lat},${lng}&scale=${scale}`
+}

@@ -6,6 +6,7 @@ import { Layout } from "./layout";
 import { Home } from "./pages/home";
 import { Add } from "./pages/add";
 import { EditStore } from "./pages/edit-store";
+import { SingleStore } from "./pages/single-store";
 import "./sass/style.scss";
 
 const App: React.FC = () => {
@@ -25,6 +26,7 @@ const App: React.FC = () => {
                 path="/stores/:id/edit"
                 component={EditStore}
               />
+              <Route exact={true} path="/store/:slug" component={SingleStore} />
             </Switch>
           </Layout>
         </FlashContextProvider>
