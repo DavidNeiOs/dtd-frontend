@@ -9,6 +9,9 @@ import { EditStore } from "./pages/edit-store";
 import { SingleStore } from "./pages/single-store";
 import { Tags } from "./pages/tags";
 import { Tag } from "./pages/tag";
+import { LogIn } from "./pages/login";
+import { Register } from "./pages/register";
+
 import "./sass/style.scss";
 
 const App: React.FC = () => {
@@ -31,6 +34,8 @@ const App: React.FC = () => {
               <Route exact={true} path="/store/:slug" component={SingleStore} />
               <Route exact={true} path="/tags" component={Tags}></Route>
               <Route exact={true} path="/tags/:tag" component={Tag}></Route>
+              <Route exact={true} path="/login" component={LogIn} />
+              <Route exact={true} path="/register" component={Register} />
             </Switch>
           </Layout>
         </FlashContextProvider>
