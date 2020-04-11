@@ -1,4 +1,3 @@
-import axios from "axios";
 import { AnyAction } from 'redux'
 import { ThunkDispatch, ThunkAction } from "redux-thunk";
 import jwt_decode from "jwt-decode";
@@ -11,7 +10,6 @@ import {
   USER_LOADING
 } from "./types";
 import { apiClient } from "../services/apiClient";
-
 
 // Register User
 export const registerUser = (userData: UserRegisterForm, history: any): ThunkAction<void, {}, {}, AnyAction> => (dispatch: ThunkDispatch<{}, {}, AnyAction>) => {
@@ -38,12 +36,13 @@ export const registerUser = (userData: UserRegisterForm, history: any): ThunkAct
 };
 
 // Login - get user token
-export const loginUser = (userData: UserLoginForm) => (dispatch: ThunkDispatch<{}, {}, AnyAction>) => {
+export const loginUser = (userData: UserLoginForm, history: any) => (dispatch: ThunkDispatch<{}, {}, AnyAction>) => {
   apiClient
     .post("/login", userData)
     .then(res => {
       // Save to localStorage
       // Set token to localStorage
+      console.log(res)
       const { token } = res.data;
       localStorage.setItem("jwtToken", token);
       // Set token to Auth header
@@ -52,12 +51,13 @@ export const loginUser = (userData: UserLoginForm) => (dispatch: ThunkDispatch<{
       const decoded = jwt_decode(token);
       // Set current user
       dispatch(setCurrentUser(decoded));
+      history.push("/")
     })
-    .catch(err =>
+    .catch(err =>{
       dispatch({
         type: GET_ERRORS,
         payload: err.response.data
-      })
+      })}
     );
 };
 

@@ -1,5 +1,9 @@
 import React from "react";
-import { Flash as IFlash, useFlashes } from "../../context/flash";
+import { useDispatch } from "react-redux";
+
+import { Flash as IFlash } from "../../context/flash";
+import { useTypedSelector } from "../../reducers";
+import { SET_ERRORS } from "../../actions/types";
 
 interface Props {
   flash: IFlash;
@@ -7,11 +11,14 @@ interface Props {
 }
 
 export const Flash = ({ flash, index }: Props) => {
-  const [flashes, setFlashes] = useFlashes();
-
+  const errors = useTypedSelector((state) => state.errors);
+  const dispatch = useDispatch();
   const handleDeleteClick = () => {
-    const newArr = [...flashes.slice(0, index), ...flashes.slice(index + 1)];
-    setFlashes(newArr);
+    const newArr = [...errors.slice(0, index), ...errors.slice(index + 1)];
+    dispatch({
+      type: SET_ERRORS,
+      payload: newArr,
+    });
   };
 
   return (

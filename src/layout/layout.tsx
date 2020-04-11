@@ -1,7 +1,8 @@
 import React, { ReactNode } from "react";
 import { Link, useLocation } from "react-router-dom";
+import { isEmpty } from "lodash";
 
-import { useFlashes } from "../context/flash";
+import { useTypedSelector } from "../reducers";
 import { UserLoggedIn } from "./user-logged-in";
 import { UserLoggedOut } from "./user-logged-out";
 
@@ -23,13 +24,15 @@ const menu = [
 
 interface Props {
   children: ReactNode;
-  user?: any;
 }
 
-export const Layout = ({ children, user = false }: Props) => {
+export const Layout = ({ children }: Props) => {
   const location = useLocation();
   const currentPage = location.pathname;
-  const [flashes] = useFlashes();
+  const data = useTypedSelector((state) => ({
+    user: state.auth.user,
+    errors: state.errors,
+  }));
 
   return (
     <>
@@ -68,14 +71,14 @@ export const Layout = ({ children, user = false }: Props) => {
             <div className="search__results"></div>
           </div>
           <div className="nav__section nav__section--user">
-            {user ? <UserLoggedIn /> : <UserLoggedOut />}
+            {!isEmpty(data.user) ? <UserLoggedIn /> : <UserLoggedOut />}
           </div>
         </nav>
       </header>
-      {Boolean(flashes.length) && (
+      {!isEmpty(data.errors) && (
         <div className="inner">
           <div className="flash-messages">
-            {flashes.map((flash, index) => (
+            {data.errors.map((flash: any, index: number) => (
               <Flash flash={flash} key={index} index={index} />
             ))}
           </div>

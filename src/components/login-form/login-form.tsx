@@ -1,5 +1,6 @@
 import React from "react";
 import * as Yup from "yup";
+import { useHistory } from "react-router-dom";
 import { withFormik, FormikProps, Form, Field } from "formik";
 import { connect } from "react-redux";
 
@@ -37,7 +38,8 @@ let schema = Yup.object().shape({
 
 interface MyFormProps {
   initialEmail?: string;
-  loginUser: (userData: UserLoginForm) => void;
+  loginUser: (userData: UserLoginForm, history: any) => void;
+  history: any;
 }
 
 const MyForm = withFormik<MyFormProps, UserLoginForm>({
@@ -47,19 +49,19 @@ const MyForm = withFormik<MyFormProps, UserLoginForm>({
   }),
   validationSchema: schema,
   handleSubmit: (values, bag) => {
-    console.log(values);
-    bag.props.loginUser(values);
+    bag.props.loginUser(values, bag.props.history);
   },
 })(InnerForm);
 
 interface Props {
   auth: AuthState;
   errors: any;
-  loginUser: (userData: UserLoginForm) => void;
+  loginUser: (userData: UserLoginForm, history: any) => void;
 }
 
 export const FormComponent = (props: Props) => {
-  return <MyForm loginUser={props.loginUser} />;
+  const history = useHistory();
+  return <MyForm loginUser={props.loginUser} history={history} />;
 };
 
 const mapStateToProps = (state: any) => ({

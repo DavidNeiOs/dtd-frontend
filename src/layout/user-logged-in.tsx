@@ -1,9 +1,26 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { MouseEvent } from "react";
+import { Link, useHistory } from "react-router-dom";
+import { connect } from "react-redux";
+import { logoutUser } from "../actions/authActions";
+import { RootState } from "../reducers";
+
 import { Heart } from "../components/icons/heart";
 import Logout from "../components/icons/logout.png";
+import { AuthState } from "../reducers/authReducer";
 
-export const UserLoggedIn = () => {
+interface Props {
+  auth: AuthState;
+  logoutUser: () => void;
+}
+
+const UserLoggedInCmp = (props: Props) => {
+  const history = useHistory();
+  const onLogoutClick = (e: MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    props.logoutUser();
+    history.push("/");
+  };
+
   return (
     <>
       <li className="nav__item">
@@ -13,11 +30,19 @@ export const UserLoggedIn = () => {
         </Link>
       </li>
       <li className="nav__item">
-        <Link to="/logout" className="nav__link">
+        <button onClick={onLogoutClick} className="nav__link">
           <img src={Logout} alt="logout icon" width="30" height="30" />
           <span>LogOut</span>
-        </Link>
+        </button>
       </li>
     </>
   );
 };
+
+const mapStateToProps = (state: RootState) => ({
+  auth: state.auth,
+});
+
+export const UserLoggedIn = connect(mapStateToProps, { logoutUser })(
+  UserLoggedInCmp
+);
