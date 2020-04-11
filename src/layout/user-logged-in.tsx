@@ -35,6 +35,15 @@ const UserLoggedInCmp = (props: Props) => {
           <span>LogOut</span>
         </button>
       </li>
+      <li className="nav__item">
+        <Link className="nav__link" to="/account">
+          <img
+            className="avatar"
+            src={props.auth.user.gravatar}
+            alt="Profile"
+          />
+        </Link>
+      </li>
     </>
   );
 };
