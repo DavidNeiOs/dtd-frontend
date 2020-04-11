@@ -1,13 +1,13 @@
 import React from "react";
 import * as Yup from "yup";
 import { withFormik, FormikProps, Form, Field } from "formik";
+import { connect } from "react-redux";
 
-interface FormValues {
-  email: string;
-  password: string;
-}
+import { UserLoginForm } from "../../types/user";
+import { loginUser } from "../../actions/authActions";
+import { AuthState } from "../../reducers/authReducer";
 
-const InnerForm = (props: FormikProps<FormValues>) => {
+const InnerForm = (props: FormikProps<UserLoginForm>) => {
   const { touched, errors, isSubmitting } = props;
   return (
     <Form className="form">
@@ -37,19 +37,34 @@ let schema = Yup.object().shape({
 
 interface MyFormProps {
   initialEmail?: string;
+  loginUser: (userData: UserLoginForm) => void;
 }
 
-const MyForm = withFormik<MyFormProps, FormValues>({
+const MyForm = withFormik<MyFormProps, UserLoginForm>({
   mapPropsToValues: (props) => ({
     email: props.initialEmail || "",
     password: "",
   }),
   validationSchema: schema,
-  handleSubmit: (values) => {
+  handleSubmit: (values, bag) => {
     console.log(values);
+    bag.props.loginUser(values);
   },
 })(InnerForm);
 
-export const LogInForm = () => {
-  return <MyForm />;
+interface Props {
+  auth: AuthState;
+  errors: any;
+  loginUser: (userData: UserLoginForm) => void;
+}
+
+export const FormComponent = (props: Props) => {
+  return <MyForm loginUser={props.loginUser} />;
 };
+
+const mapStateToProps = (state: any) => ({
+  auth: state.auth,
+  errors: state.errors,
+});
+
+export const LoginForm = connect(mapStateToProps, { loginUser })(FormComponent);

@@ -1,17 +1,14 @@
 import React from "react";
 import * as Yup from "yup";
+import { connect } from "react-redux";
 import { withFormik, FormikProps, Form, Field } from "formik";
+import { useHistory } from "react-router-dom";
 
-import { apiClient } from "../../services/apiClient";
+import { UserRegisterForm } from "../../types/user";
+import { registerUser } from "../../actions/authActions";
+import { AuthState } from "../../reducers/authReducer";
 
-interface FormValues {
-  name: string;
-  email: string;
-  password: string;
-  password_confirm: string;
-}
-
-const InnerForm = (props: FormikProps<FormValues>) => {
+const InnerForm = (props: FormikProps<UserRegisterForm>) => {
   const { touched, errors, isSubmitting } = props;
   return (
     <Form className="form">
@@ -55,9 +52,11 @@ let schema = Yup.object().shape({
 
 interface MyFormProps {
   initialEmail?: string;
+  registerUser: (userData: UserRegisterForm, history: any) => void;
+  history: any;
 }
 
-const MyForm = withFormik<MyFormProps, FormValues>({
+const MyForm = withFormik<MyFormProps, UserRegisterForm>({
   mapPropsToValues: (props) => ({
     name: "",
     email: props.initialEmail || "",
@@ -65,12 +64,27 @@ const MyForm = withFormik<MyFormProps, FormValues>({
     password_confirm: "",
   }),
   validationSchema: schema,
-  handleSubmit: async (values) => {
-    const response = await apiClient.post("/register", values);
-    console.log(response.data);
+  handleSubmit: async (values, bag) => {
+    bag.props.registerUser(values, bag.props.history);
   },
 })(InnerForm);
 
-export const RegisterForm = () => {
-  return <MyForm />;
+interface Props {
+  auth: AuthState;
+  errors: any;
+  registerUser: (userData: UserRegisterForm, history: any) => void;
+}
+
+const FormComponent = (props: Props) => {
+  const history = useHistory();
+  return <MyForm registerUser={props.registerUser} history={history} />;
 };
+
+const mapStateToProps = (state: any) => ({
+  auth: state.auth,
+  errors: state.errors,
+});
+
+export const RegisterForm = connect(mapStateToProps, { registerUser })(
+  FormComponent
+);
