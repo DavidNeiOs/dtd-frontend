@@ -19,6 +19,7 @@ import { Register } from "./pages/register";
 import store from "./store";
 
 import "./sass/style.scss";
+import { EditUser } from "./pages/edit-user";
 
 // Check for token to keep user Logged in
 
@@ -53,18 +54,19 @@ const App: React.FC = () => {
             <Layout>
               <Route exact={true} path="/" component={Home} />
               <Route exact={true} path="/stores" component={Home} />
-              <Route
-                exact={true}
-                path="/stores/:id/edit"
-                component={EditStore}
-              />
               <Route exact={true} path="/store/:slug" component={SingleStore} />
-              <Route exact={true} path="/tags" component={Tags}></Route>
-              <Route exact={true} path="/tags/:tag" component={Tag}></Route>
+              <Route exact={true} path="/tags" component={Tags} />
+              <Route exact={true} path="/tags/:tag" component={Tag} />
               <Route exact={true} path="/login" component={LogIn} />
               <Route exact={true} path="/register" component={Register} />
               <Switch>
                 <PrivateRoute exact={true} path="/add" cmp={Add} />
+                <PrivateRoute
+                  exact={true}
+                  path="/stores/:id/edit"
+                  cmp={EditStore}
+                />
+                <PrivateRoute exact path="/account" cmp={EditUser} />
               </Switch>
             </Layout>
           </FlashContextProvider>

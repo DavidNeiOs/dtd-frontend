@@ -20,3 +20,7 @@ export interface UserLoginForm {
   email: string;
   password: string;
 }
+
+export interface UserEditForm extends User {
+  
+}

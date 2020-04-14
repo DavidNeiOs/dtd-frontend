@@ -16,7 +16,6 @@ export const registerUser = (userData: UserRegisterForm, history: any): ThunkAct
   apiClient
     .post("/register", userData)
     .then(res => {
-      console.log(res.data);
       const { token } = res.data;
       localStorage.setItem("jwtToken", token);
       // Set token to Auth header
