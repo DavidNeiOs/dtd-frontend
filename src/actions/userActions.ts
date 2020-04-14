@@ -35,5 +35,4 @@ export const updateUser = (userData: User): ThunkAction<void, {}, {}, AnyAction>
         payload: { success: false, message: "You must log in to update your user"}
       })
     })
-
 }

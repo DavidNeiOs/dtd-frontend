@@ -3,6 +3,7 @@ import { ThunkDispatch, ThunkAction } from "redux-thunk";
 import jwt_decode from "jwt-decode";
 
 import { UserRegisterForm, UserLoginForm } from "../types/user"
+import { ForgotPasswordValues } from "../components/forgot-password-form"
 import setAuthToken from "../utils/setAuthToken";
 import {
   GET_ERRORS,
@@ -84,3 +85,17 @@ export const logoutUser = () => (dispatch: ThunkDispatch<{}, {}, AnyAction>) => 
   // Set current user to empty object {} which will set isAuthenticated to false
   dispatch(setCurrentUser({}));
 };
+
+export const forgotPassword = (userData: ForgotPasswordValues) =>  (dispatch: ThunkDispatch<{}, {}, AnyAction>) => {
+  return apiClient
+    .post('/forgot-password', userData)
+    .then(res => {
+      console.log(res.data)
+    })
+    .catch(err => {
+      dispatch({
+        type: GET_ERRORS,
+        payload: err.response.data
+      })
+    })
+}
