@@ -20,6 +20,7 @@ import store from "./store";
 
 import "./sass/style.scss";
 import { EditUser } from "./pages/edit-user";
+import { ResetPassword } from "./pages/reset-password";
 
 // Check for token to keep user Logged in
 
@@ -59,6 +60,11 @@ const App: React.FC = () => {
               <Route exact={true} path="/tags/:tag" component={Tag} />
               <Route exact={true} path="/login" component={LogIn} />
               <Route exact={true} path="/register" component={Register} />
+              <Route
+                exact
+                path="/account/reset/:token"
+                component={ResetPassword}
+              />
               <Switch>
                 <PrivateRoute exact={true} path="/add" cmp={Add} />
                 <PrivateRoute

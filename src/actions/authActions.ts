@@ -11,6 +11,7 @@ import {
   USER_LOADING
 } from "./types";
 import { apiClient } from "../services/apiClient";
+import { ResetPasswordValues } from '../components/reset-password-form';
 
 // Register User
 export const registerUser = (userData: UserRegisterForm, history: any): ThunkAction<void, {}, {}, AnyAction> => (dispatch: ThunkDispatch<{}, {}, AnyAction>) => {
@@ -42,7 +43,6 @@ export const loginUser = (userData: UserLoginForm, history: any) => (dispatch: T
     .then(res => {
       // Save to localStorage
       // Set token to localStorage
-      console.log(res)
       const { token } = res.data;
       localStorage.setItem("jwtToken", token);
       // Set token to Auth header
@@ -90,7 +90,28 @@ export const forgotPassword = (userData: ForgotPasswordValues) =>  (dispatch: Th
   return apiClient
     .post('/forgot-password', userData)
     .then(res => {
-      console.log(res.data)
+      dispatch({
+        type: GET_ERRORS,
+        payload: res.data
+      })
+    })
+    .catch(err => {
+      dispatch({
+        type: GET_ERRORS,
+        payload: err.response.data
+      })
+    })
+}
+
+export const resetPassword = (data: ResetPasswordValues, token: string, history: any) => (dispatch: ThunkDispatch<{}, {}, AnyAction>) => {
+  return apiClient
+    .post(`/reset-password/${token}`, data)
+    .then(res => {
+      dispatch({
+        type: GET_ERRORS,
+        payload: res.data
+      });
+      history.push('/login');
     })
     .catch(err => {
       dispatch({
